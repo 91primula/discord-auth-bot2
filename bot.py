@@ -32,11 +32,11 @@ last_action_time = datetime.utcnow()
 # ────────────────────────────────
 # ✅ 메시지 삭제 반복 작업
 # ────────────────────────────────
-@tasks.loop(seconds=60)  # 1분마다 체크
+@tasks.loop(seconds=10)  # 1분마다 체크
 async def cleanup_messages():
     global last_action_time
     now = datetime.utcnow()
-    if (now - last_action_time) > timedelta(minutes=5):
+    if (now - last_action_time) > timedelta(seconds=10):
         channel = bot.get_channel(TARGET_CHANNEL_ID)
         if channel:
             # 고정 메시지를 제외하고 삭제
@@ -86,3 +86,4 @@ async def on_ready():
 # ✅ 봇 실행
 # ────────────────────────────────
 bot.run(TOKEN)
+
